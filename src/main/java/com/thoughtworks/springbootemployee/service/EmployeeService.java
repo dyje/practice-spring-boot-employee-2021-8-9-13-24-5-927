@@ -2,9 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +20,7 @@ public class EmployeeService {
         return employeeRepository.getAllEmployees();
     }
 
-    public Employee getEmployeeByID(Integer employeeId){
+    public Employee getEmployeeByID(Integer employeeId) {
         return employeeRepository.getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getId().equals(employeeId))
@@ -33,7 +31,7 @@ public class EmployeeService {
     public List<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
         return employeeRepository.getAllEmployees()
                 .stream()
-                .skip((page -1) * pageSize)
+                .skip((page - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
@@ -47,12 +45,12 @@ public class EmployeeService {
 
     public Employee addNewEmployee(Employee newEmployee) {
         Employee newEmployeeToBeAdded = new Employee(
-                employeeRepository.getAllEmployees().size()+1, newEmployee.getName(), newEmployee.getAge(), newEmployee.getGender(), newEmployee.getSalary());
+                employeeRepository.getAllEmployees().size() + 1, newEmployee.getName(), newEmployee.getAge(), newEmployee.getGender(), newEmployee.getSalary());
         employeeRepository.getAllEmployees().add(newEmployeeToBeAdded);
         return newEmployeeToBeAdded;
     }
 
-    public Employee findById (Integer employeeId, Employee employeeUpdate){
+    public Employee findById(Integer employeeId, Employee employeeUpdate) {
         return employeeRepository.getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getId().equals(employeeId))
@@ -61,18 +59,18 @@ public class EmployeeService {
                 .orElse(null);
 
     }
-
-    public Employee updateEmployeeInfo (Employee employee, Employee employeeUpdate){
-        if (employeeUpdate.getName() != null){
+    
+    public Employee updateEmployeeInfo(Employee employee, Employee employeeUpdate) {
+        if (employeeUpdate.getName() != null) {
             employee.setName(employeeUpdate.getName());
         }
-        if (employeeUpdate.getAge() != null){
+        if (employeeUpdate.getAge() != null) {
             employee.setAge(employeeUpdate.getAge());
         }
-        if (employeeUpdate.getGender() != null){
+        if (employeeUpdate.getGender() != null) {
             employee.setGender(employeeUpdate.getGender());
         }
-        if (employeeUpdate.getSalary() != null){
+        if (employeeUpdate.getSalary() != null) {
             employee.setSalary(employeeUpdate.getSalary());
         }
         return employee;
@@ -82,7 +80,7 @@ public class EmployeeService {
         Employee employeeToBeRemoved = employeeRepository.getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getId()
-                .equals(employeeId))
+                        .equals(employeeId))
                 .findFirst()
                 .orElse(null);
         if (employeeToBeRemoved != null)
