@@ -10,12 +10,15 @@ import java.util.List;
 @Service
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
+    private Integer employeeId;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     public List<Employee> getAllEmployees() {
-        return employeeRepository.getEmployees();
+        return employeeRepository.getAllEmployees();
     }
+    
+    
 }
