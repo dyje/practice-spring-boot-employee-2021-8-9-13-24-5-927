@@ -56,9 +56,6 @@ public class EmployeeServiceTest {
     void should_return_expected_number_only_when_getEmployeeByPage_given_page_size_three_and_page_index_one() {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Alice", 25, "Female", 10000));
-        employees.add(new Employee(2, "Bob", 25, "Male", 10000));
-        employees.add(new Employee(3, "Catnice", 25, "Female", 10000));
         given(employeeRepository.getAllEmployees()).willReturn(Arrays.asList(new Employee(),new Employee(),new Employee(),new Employee(), new Employee(), new Employee()));
         int expectedCountOfEmployees = 3;
 
@@ -69,6 +66,8 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployees, expectedCountOfEmployees);
         
     }
+    
+    
     
 
 
