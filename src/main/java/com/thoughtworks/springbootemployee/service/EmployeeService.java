@@ -52,7 +52,29 @@ public class EmployeeService {
         return newEmployeeToBeAdded;
     }
 
-    public Employee updateEmployeeInfo (Employee employee){
-        return null;
+    public Employee findById (Integer employeeId, Employee employeeUpdate){
+        return employeeRepository.getAllEmployees()
+                .stream()
+                .filter(employee -> employee.getId().equals(employeeId))
+                .findFirst()
+                .map(employee -> updateEmployeeInfo(employee, employeeUpdate))
+                .orElse(null);
+
+    }
+
+    public Employee updateEmployeeInfo (Employee employee, Employee employeeUpdate){
+        if (employeeUpdate.getName() != null){
+            employee.setName(employeeUpdate.getName());
+        }
+        if (employeeUpdate.getAge() != null){
+            employee.setAge(employeeUpdate.getAge());
+        }
+        if (employeeUpdate.getGender() != null){
+            employee.setGender(employeeUpdate.getGender());
+        }
+        if (employeeUpdate.getSalary() != null){
+            employee.setSalary(employeeUpdate.getSalary());
+        }
+        return employee;
     }
 }

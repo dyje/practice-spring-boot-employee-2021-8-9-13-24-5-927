@@ -43,4 +43,9 @@ public class EmployeesController {
         return employee;
     }
 
+    @PatchMapping(path = "/{employeeId}")
+    public Employee updateEmployee (@PathVariable Integer employeeId, @RequestBody Employee employeeUpdate){
+            return employeeService.findById(employeeId, employeeUpdate);
+    }
+
 }
