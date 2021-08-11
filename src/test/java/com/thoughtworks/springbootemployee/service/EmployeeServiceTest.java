@@ -131,7 +131,7 @@ public class EmployeeServiceTest {
         }};
         //when
 
-        Employee updatedEmployee = employeeService.updateEmployeeInfo(updateEmployee);
+        Employee updatedEmployee = employeeService.findById(1,updateEmployee);
         
         //then
         assertEquals(employees.get(0).getName(), updatedEmployee.getName());
