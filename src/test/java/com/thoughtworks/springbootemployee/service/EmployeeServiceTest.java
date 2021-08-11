@@ -149,7 +149,7 @@ public class EmployeeServiceTest {
         given(employeeRepository.getAllEmployees()).willReturn(employees);
                 
         //when
-        Employee removeEmployee = employeeService.remvoveEmployee(1);
+        Employee removeEmployee = employeeService.removeEmployee(1);
         
         //then
         assertEquals(1, employees.size());
