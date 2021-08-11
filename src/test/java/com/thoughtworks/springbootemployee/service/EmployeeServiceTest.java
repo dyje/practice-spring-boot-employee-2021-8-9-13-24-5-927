@@ -85,8 +85,8 @@ public class EmployeeServiceTest {
                                 .stream()
                                 .map(Employee::getGender)
                                 .filter(employeeGender -> employeeGender.equals("Male")).count());
-        assertEquals(employees.get(0).getGender(), filteredMaleEmployees.get(0).getGender());
-        assertEquals(employees.get(1).getGender(), filteredMaleEmployees.get(1).getGender());
+        assertEquals(employees.get(1).getGender(), filteredMaleEmployees.get(0).getGender());
+        assertEquals(employees.get(3).getGender(), filteredMaleEmployees.get(1).getGender());
 
     }
     
