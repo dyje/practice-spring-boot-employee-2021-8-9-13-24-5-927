@@ -51,4 +51,8 @@ public class EmployeeService {
         employeeRepository.getAllEmployees().add(newEmployeeToBeAdded);
         return newEmployeeToBeAdded;
     }
+
+    public Employee updateEmployeeInfo (Employee employee){
+        return null;
+    }
 }
