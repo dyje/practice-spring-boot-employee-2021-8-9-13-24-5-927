@@ -39,8 +39,7 @@ public class EmployeesController {
 
     @PostMapping
     public Employee addNewEmployee (@RequestBody Employee employee){
-        employees.add(employee);
-
+        employeeService.addNewEmployee(employee);
         return employee;
     }
 

@@ -44,4 +44,11 @@ public class EmployeeService {
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
     }
+
+    public Employee addNewEmployee(Employee newEmployee) {
+        Employee newEmployeeToBeAdded = new Employee(
+                employeeRepository.getAllEmployees().size()+1, newEmployee.getName(), newEmployee.getAge(), newEmployee.getGender(), newEmployee.getSalary());
+        employeeRepository.getAllEmployees().add(newEmployeeToBeAdded);
+        return newEmployeeToBeAdded;
+    }
 }
