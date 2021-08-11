@@ -66,7 +66,29 @@ public class EmployeeServiceTest {
         assertEquals(expectedEmployees, expectedCountOfEmployees);
         
     }
-    
+    @Test
+    void should_return_male_employees_when_getEmployeeByGender_given_mixed_of_male_and_female_employees() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1, "Alice", 25, "Female", 10000));
+        employees.add(new Employee(2, "Bob", 25, "Male", 10000));
+        employees.add(new Employee(3, "Catnice", 25, "Female", 10000));
+        employees.add(new Employee(4, "Donnie", 30, "Male", 20000));
+        given(employeeRepository.getAllEmployees()).willReturn(employees);
+        String gender = "Male";
+
+        //when
+        List<Employee> filteredMaleEmployees = employeeService.getEmployeeByGender(gender);
+
+        //then
+        assertEquals(2, filteredMaleEmployees
+                                .stream()
+                                .map(Employee::getGender)
+                                .filter(employeeGender -> employeeGender.equals("Male")).count());
+        assertEquals(employees.get(0).getGender(), filteredMaleEmployees.get(0).getGender());
+        assertEquals(employees.get(1).getGender(), filteredMaleEmployees.get(1).getGender());
+
+    }
     
     
 

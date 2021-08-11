@@ -37,4 +37,8 @@ public class EmployeeService {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public List<Employee> getEmployeeByGender(String gender) {
+        return null;
+    }
 }
