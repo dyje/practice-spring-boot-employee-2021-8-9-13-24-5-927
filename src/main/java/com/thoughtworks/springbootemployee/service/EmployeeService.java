@@ -77,4 +77,8 @@ public class EmployeeService {
         }
         return employee;
     }
+
+    public Employee remvoveEmployee(Integer employeeId) {
+        return null;
+    }
 }

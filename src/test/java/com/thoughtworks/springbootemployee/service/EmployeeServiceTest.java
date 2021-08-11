@@ -140,6 +140,23 @@ public class EmployeeServiceTest {
 
     }
     
+    @Test
+    void should_delete_employee_when_deleteEmployee_given_employee_id() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1, "Alice", 25, "Female", 10000));
+        employees.add(new Employee(2, "Bob", 25, "Male", 10000));
+        given(employeeRepository.getAllEmployees()).willReturn(employees);
+                
+        //when
+        Employee removeEmployee = employeeService.remvoveEmployee(1);
+        
+        //then
+        assertEquals(1, employees.size());
+        assertEquals(1, removeEmployee.getId());
+        
+    }
+    
 
 
     }
