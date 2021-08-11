@@ -23,13 +23,33 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_all_employees_when_getAllEmployees_given_all_employees() {
         //given
-            List<Employee> employees = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1, "Alice", 25, "Female", 10000));
-        employees.add(new Employee(2, "Bob", 25, "Female", 10000));
-        given(employeeRepository.getEmployees()).willReturn(employees);
+        employees.add(new Employee(2, "Bob", 25, "Male", 10000));
+        employees.add(new Employee(3, "Catnice", 25, "Female", 10000));
+        given(employeeRepository.getAllEmployees()).willReturn(employees);
         //when
         List<Employee> actualEmployees = employeeService.getAllEmployees();
         //then
         assertEquals(employees, actualEmployees);
     }
+
+    @Test
+    public void should_return_an_employees_when_getEmployeeByID_given_an_employee_id() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1, "Alice", 25, "Female", 10000));
+        employees.add(new Employee(2, "Bob", 25, "Male", 10000));
+        employees.add(new Employee(3, "Catnice", 25, "Female", 10000));
+        given(employeeRepository.getAllEmployees()).willReturn(employees);
+
+        //when
+        Employee filteredEmployee = employeeService.getEmployeeByID(1);
+
+        //then
+        assertEquals(employees.get(0), filteredEmployee);
+
+    }
+
+
     }
