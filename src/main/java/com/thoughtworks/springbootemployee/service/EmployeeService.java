@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
@@ -26,5 +28,13 @@ public class EmployeeService {
                 .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
+        return employeeRepository.getAllEmployees()
+                .stream()
+                .skip((page -1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
