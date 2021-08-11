@@ -90,6 +90,30 @@ public class EmployeeServiceTest {
 
     }
     
+    @Test
+    void should_return_newly_added_employee_when_addNewEmployee_given_employee_info () {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        given(employeeRepository.getAllEmployees()).willReturn(employees);
+        Employee newEmployee = new Employee(){
+            { setId(1);
+            setName("Kael");
+            setAge(45);
+            setGender("Male");
+            setSalary(9000);
+            }
+        };
+        //when
+        employeeService.addNewEmployee(newEmployee);
+
+
+        //then
+        assertEquals(employees.get(0).getId(), 1);
+        assertEquals(employees.get(0).getName(), newEmployee.getName());
+        assertEquals(employees.get(0).getAge(), newEmployee.getAge());
+        assertEquals(employees.get(0).getGender(), newEmployee.getGender());
+        assertEquals(employees.get(0).getSalary(), newEmployee.getSalary());
+    }
     
 
 
