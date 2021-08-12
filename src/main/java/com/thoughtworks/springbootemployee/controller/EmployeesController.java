@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/employees")
@@ -22,7 +23,7 @@ public class EmployeesController {
     }
 
     @GetMapping(path = "/{employeeID}")
-    public Employee getEmployeeByID(@PathVariable Integer employeeID) {
+    public Optional<Employee> getEmployeeByID(@PathVariable Integer employeeID) {
         return employeeService.getEmployeeByID(employeeID);
     }
 

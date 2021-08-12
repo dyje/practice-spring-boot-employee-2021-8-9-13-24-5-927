@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,12 +25,8 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee getEmployeeByID(Integer employeeId) {
-        return retiringEmployeeRepository.getAllEmployees()
-                .stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .orElse(null);
+    public Optional<Employee> getEmployeeByID(Integer employeeId) {
+        return employeeRepository.findById(employeeId);
     }
 
     public List<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
