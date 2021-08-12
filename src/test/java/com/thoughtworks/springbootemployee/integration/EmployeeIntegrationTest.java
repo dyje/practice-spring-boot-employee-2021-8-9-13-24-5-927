@@ -88,6 +88,19 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.*", hasSize(4)));
 
     }
+
+    @Test
+    void should_return_employees_when_getEmployeeByGender() throws Exception{
+        //given
+        String gender = "male";
+
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", gender)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(4)));
+    }
     
 
 
