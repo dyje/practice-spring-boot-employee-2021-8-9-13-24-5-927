@@ -33,11 +33,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
-//        return retiringEmployeeRepository.getAllEmployees()
-//                .stream()
-//                .skip((page -1) * pageSize)
-//                .limit(pageSize)
-//                .collect(Collectors.toList());
         return employeeRepository.findAll(PageRequest.of(page-1, pageSize)).getContent();
     }
 
@@ -49,7 +44,7 @@ public class EmployeeService {
         return employeeRepository.save(newEmployee);
     }
 
-    public Employee findById(Integer employeeId, Employee employeeUpdate) {
+    public Employee updateEmployeeById(Integer employeeId, Employee employeeUpdate) {
         return retiringEmployeeRepository.getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getId().equals(employeeId))
