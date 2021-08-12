@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -34,7 +33,7 @@ public class EmployeeService {
 
 //    public Page<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
 //        Pageable pageable = (Pageable) PageRequest.of(page, pageSize);
-//        return  employeeRepository.findAllList(pageable);
+//        return employeeRepository.findAll((org.springframework.data.domain.Pageable) pageable);
 //    }
 
     public List<Employee> getEmployeeByGender(String gender) {
@@ -42,10 +41,7 @@ public class EmployeeService {
     }
 
     public Employee addNewEmployee(Employee newEmployee) {
-        Employee newEmployeeToBeAdded = new Employee(
-                retiringEmployeeRepository.getAllEmployees().size() + 1, newEmployee.getName(), newEmployee.getAge(), newEmployee.getGender(), newEmployee.getSalary());
-        retiringEmployeeRepository.getAllEmployees().add(newEmployeeToBeAdded);
-        return newEmployeeToBeAdded;
+        return employeeRepository.save(newEmployee);
     }
 
     public Employee findById(Integer employeeId, Employee employeeUpdate) {
