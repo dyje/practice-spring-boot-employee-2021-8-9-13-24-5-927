@@ -72,6 +72,22 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.gender").value("male"))
                 .andExpect(jsonPath("$.salary").value(500));
     }
+
+    @Test
+    void should_return_four_employees_when_getEmployeeByPage() throws Exception {
+        //given
+        int pageSize = 4;
+        int page = 1;
+
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
+                .param("page", String.valueOf(page)).param("pageSize", String.valueOf(pageSize))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(4)));
+
+    }
     
 
 
