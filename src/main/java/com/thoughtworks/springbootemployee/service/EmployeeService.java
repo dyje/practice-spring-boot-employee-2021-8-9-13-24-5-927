@@ -20,8 +20,9 @@ public class EmployeeService {
     private Integer employeeId;
     @Autowired
     private EmployeeRepository employeeRepository;
-    public EmployeeService(RetiringEmployeeRepository retiringEmployeeRepository) {
-        this.retiringEmployeeRepository = retiringEmployeeRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     public List<Employee> getAllEmployees() {
@@ -45,12 +46,10 @@ public class EmployeeService {
     }
 
     public Employee updateEmployeeById(Integer employeeId, Employee employeeUpdate) {
-        return getAllEmployees()
-                .stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
+        Employee updatedEmployee = employeeRepository.findById(employeeId)
                 .map(employee -> updateEmployeeInfo(employee, employeeUpdate))
-                .orElse(null);
+                .get();
+        return employeeRepository.save(updatedEmployee);
 
     }
     
@@ -67,7 +66,10 @@ public class EmployeeService {
         if (employeeUpdate.getSalary() != null) {
             employee.setSalary(employeeUpdate.getSalary());
         }
-        return employeeRepository.save(employeeUpdate);
+        if (employeeUpdate.getCompanyId() != null) {
+            employee.setCompanyId(employeeUpdate.getCompanyId());
+        }
+        return employee;
     }
 
     public Employee removeEmployee(Integer employeeId) {
