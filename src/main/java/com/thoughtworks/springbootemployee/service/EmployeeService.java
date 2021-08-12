@@ -45,7 +45,7 @@ public class EmployeeService {
     }
 
     public Employee updateEmployeeById(Integer employeeId, Employee employeeUpdate) {
-        return retiringEmployeeRepository.getAllEmployees()
+        return getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
@@ -67,18 +67,18 @@ public class EmployeeService {
         if (employeeUpdate.getSalary() != null) {
             employee.setSalary(employeeUpdate.getSalary());
         }
-        return employee;
+        return employeeRepository.save(employeeUpdate);
     }
 
     public Employee removeEmployee(Integer employeeId) {
-        Employee employeeToBeRemoved = retiringEmployeeRepository.getAllEmployees()
+        Employee employeeToBeRemoved = getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getId()
                         .equals(employeeId))
                 .findFirst()
                 .orElse(null);
         if (employeeToBeRemoved != null)
-            retiringEmployeeRepository.getAllEmployees().remove(employeeToBeRemoved);
+            employeeRepository.delete(employeeToBeRemoved);
         return employeeToBeRemoved;
     }
 }

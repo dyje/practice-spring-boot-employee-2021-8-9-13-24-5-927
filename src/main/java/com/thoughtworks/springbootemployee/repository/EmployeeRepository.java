@@ -11,7 +11,5 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-    //public Page<Employee> findAll(PageRequest pageable);
-
     public List<Employee> findAllByGender(String gender);
 }

@@ -45,7 +45,7 @@ public class EmployeesController {
 
     @PatchMapping(path = "/{employeeId}")
     public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeUpdate) {
-        return employeeService.findById(employeeId, employeeUpdate);
+        return employeeService.updateEmployeeById(employeeId, employeeUpdate);
     }
 
     @DeleteMapping(path = "/{employeeId}")
