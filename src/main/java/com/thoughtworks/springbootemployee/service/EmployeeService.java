@@ -4,8 +4,11 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.repository.RetiringEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,19 +32,13 @@ public class EmployeeService {
         return employeeRepository.findById(employeeId);
     }
 
-    public List<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
-        return retiringEmployeeRepository.getAllEmployees()
-                .stream()
-                .skip((page - 1) * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
-    }
+//    public Page<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
+//        Pageable pageable = (Pageable) PageRequest.of(page, pageSize);
+//        return  employeeRepository.findAllList(pageable);
+//    }
 
     public List<Employee> getEmployeeByGender(String gender) {
-        return retiringEmployeeRepository.getAllEmployees()
-                .stream()
-                .filter(employee -> employee.getGender().equals(gender))
-                .collect(Collectors.toList());
+        return employeeRepository.findAllByGender(gender);
     }
 
     public Employee addNewEmployee(Employee newEmployee) {
