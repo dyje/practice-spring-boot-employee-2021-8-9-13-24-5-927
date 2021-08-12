@@ -57,7 +57,21 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].salary").value("500"));
     }
 
+    @Test
+    void should_return_employee_when_getEmployeeByID() throws Exception {
+        //given
+        int id = mockEmployees.get(0).getId();
 
+
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Jesse"))
+                .andExpect(jsonPath("$.age").value(22))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(500));
+    }
     
 
 
