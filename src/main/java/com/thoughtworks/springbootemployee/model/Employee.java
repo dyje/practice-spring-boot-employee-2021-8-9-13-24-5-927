@@ -8,13 +8,25 @@ import javax.persistence.Id;
 @Entity
 public class Employee {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer age;
     private String gender;
     private Integer salary;
     private Integer companyId;
+
+    public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+    }
+
+    public Employee() {
+
+    }
 
     public void setId(Integer id) {
         this.id = id;
@@ -59,18 +71,8 @@ public class Employee {
     public Integer getSalary() {
         return salary;
     }
+
     public Integer getCompanyId() {
         return companyId;
-    }
-
-    public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.salary = salary;
-    }
-    public Employee(){
-
     }
 }
