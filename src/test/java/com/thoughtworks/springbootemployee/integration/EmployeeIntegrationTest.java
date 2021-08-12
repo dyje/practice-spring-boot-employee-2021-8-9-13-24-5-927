@@ -142,11 +142,19 @@ public class EmployeeIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.salary").value("2500"));
     }
-    
 
+    @Test
+    void should_remove_employee_when_removeEmployee() throws Exception {
+        //given
+        final Employee employee = new Employee(228, "Lisa", 22, "female", 2000);
+        final Employee addedEmployee = employeeRepository.save(employee);
 
-
-
-
-
+        //when
+        //then
+        int employeeID = addedEmployee.getId();
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", employeeID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }
