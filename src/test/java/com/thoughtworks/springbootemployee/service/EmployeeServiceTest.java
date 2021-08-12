@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.repository.RetiringEmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +20,7 @@ public class EmployeeServiceTest {
     @InjectMocks
     private EmployeeService employeeService;
     @Mock
-    private EmployeeRepository employeeRepository;
+    private RetiringEmployeeRepository retiringEmployeeRepository;
     @Test
     public void should_return_all_employees_when_getAllEmployees_given_all_employees() {
         //given
@@ -28,7 +28,7 @@ public class EmployeeServiceTest {
         employees.add(new Employee(1, "Alice", 25, "Female", 10000));
         employees.add(new Employee(2, "Bob", 25, "Male", 10000));
         employees.add(new Employee(3, "Catnice", 25, "Female", 10000));
-        given(employeeRepository.getAllEmployees()).willReturn(employees);
+        given(retiringEmployeeRepository.getAllEmployees()).willReturn(employees);
         //when
         List<Employee> actualEmployees = employeeService.getAllEmployees();
         //then
@@ -42,7 +42,7 @@ public class EmployeeServiceTest {
         employees.add(new Employee(1, "Alice", 25, "Female", 10000));
         employees.add(new Employee(2, "Bob", 25, "Male", 10000));
         employees.add(new Employee(3, "Catnice", 25, "Female", 10000));
-        given(employeeRepository.getAllEmployees()).willReturn(employees);
+        given(retiringEmployeeRepository.getAllEmployees()).willReturn(employees);
 
         //when
         Employee filteredEmployee = employeeService.getEmployeeByID(1);
@@ -56,7 +56,7 @@ public class EmployeeServiceTest {
     void should_return_expected_number_only_when_getEmployeeByPage_given_page_size_three_and_page_index_one() {
         //given
         List<Employee> employees = new ArrayList<>();
-        given(employeeRepository.getAllEmployees()).willReturn(Arrays.asList(new Employee(),new Employee(),new Employee(),new Employee(), new Employee(), new Employee()));
+        given(retiringEmployeeRepository.getAllEmployees()).willReturn(Arrays.asList(new Employee(),new Employee(),new Employee(),new Employee(), new Employee(), new Employee()));
         int expectedCountOfEmployees = 3;
 
         //when
@@ -74,7 +74,7 @@ public class EmployeeServiceTest {
         employees.add(new Employee(2, "Bob", 25, "Male", 10000));
         employees.add(new Employee(3, "Catnice", 25, "Female", 10000));
         employees.add(new Employee(4, "Donnie", 30, "Male", 20000));
-        given(employeeRepository.getAllEmployees()).willReturn(employees);
+        given(retiringEmployeeRepository.getAllEmployees()).willReturn(employees);
         String gender = "Male";
 
         //when
@@ -94,7 +94,7 @@ public class EmployeeServiceTest {
     void should_return_newly_added_employee_when_addNewEmployee_given_employee_info () {
         //given
         List<Employee> employees = new ArrayList<>();
-        given(employeeRepository.getAllEmployees()).willReturn(employees);
+        given(retiringEmployeeRepository.getAllEmployees()).willReturn(employees);
         Employee newEmployee = new Employee(){
             { setId(1);
             setName("Kael");
@@ -121,7 +121,7 @@ public class EmployeeServiceTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1, "Alice", 25, "Female", 10000));
         employees.add(new Employee(2, "Bob", 25, "Male", 10000));
-        given(employeeRepository.getAllEmployees()).willReturn(employees);
+        given(retiringEmployeeRepository.getAllEmployees()).willReturn(employees);
 
         Employee updateEmployee = new Employee(){{
             setName("Alice in borderland");
@@ -146,7 +146,7 @@ public class EmployeeServiceTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1, "Alice", 25, "Female", 10000));
         employees.add(new Employee(2, "Bob", 25, "Male", 10000));
-        given(employeeRepository.getAllEmployees()).willReturn(employees);
+        given(retiringEmployeeRepository.getAllEmployees()).willReturn(employees);
                 
         //when
         Employee removeEmployee = employeeService.removeEmployee(1);
