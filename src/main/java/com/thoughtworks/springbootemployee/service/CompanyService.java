@@ -35,6 +35,21 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
+    public Company updateCompanyById(Integer companyId, Company companyUpdate) {
+        Company updatedCompany = companyRepository.findById(companyId)
+                .map(company -> updateCompanyInfo(company, companyUpdate))
+                .get();
+        return companyRepository.save(updatedCompany);
+
+    }
+
+    public Company updateCompanyInfo(Company company, Company companyUpdate) {
+        if (companyUpdate.getCompanyId() != null) {
+            company.setCompanyId(companyUpdate.getCompanyId());
+        }
+        return company;
+    }
+
     public List<Employee> getAllEmployeesInCompany(Integer companyId) {
         Company company = companyRepository.findById(companyId).orElse(null);
         return company.getEmployees();
