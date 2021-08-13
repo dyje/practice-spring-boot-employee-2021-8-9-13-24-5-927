@@ -31,6 +31,10 @@ public class CompanyService {
         return companyRepository.findAll(PageRequest.of(page - 1, pageSize)).getContent();
     }
 
+    public Company addNewCompany(Company company) {
+        return companyRepository.save(company);
+    }
+
     public List<Employee> getAllEmployeesInCompany(Integer companyId) {
         Company company = companyRepository.findById(companyId).orElse(null);
         return company.getEmployees();
