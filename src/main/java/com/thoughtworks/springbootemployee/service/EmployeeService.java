@@ -76,7 +76,7 @@ public class EmployeeService {
                 .filter(employee -> employee.getId()
                         .equals(employeeId))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(()->new EmployeeNotFoundException("Employee ID not found."));
         if (employeeToBeRemoved != null)
             employeeRepository.delete(employeeToBeRemoved);
         return employeeToBeRemoved;
