@@ -50,6 +50,18 @@ public class CompanyService {
         return company;
     }
 
+    public Company removeCompany(Integer companyId) {
+        Company companyToBeRemoved = getAllCompanies()
+                .stream()
+                .filter(company -> company.getCompanyId()
+                        .equals(companyId))
+                .findFirst()
+                .orElseThrow(()->new CompanyNotFoundException("Company ID not found."));
+        if (companyToBeRemoved != null)
+            companyRepository.delete(companyToBeRemoved);
+        return companyToBeRemoved;
+    }
+
     public List<Employee> getAllEmployeesInCompany(Integer companyId) {
         Company company = companyRepository.findById(companyId).orElse(null);
         return company.getEmployees();
