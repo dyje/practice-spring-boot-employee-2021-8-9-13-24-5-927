@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.integration;
 
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,22 +21,23 @@ public class EmployeeIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
-
-    private List<Employee> mockEmployees;
+    private Employee employee;
 
     @BeforeEach
     public void data() {
-        mockEmployees = Arrays.asList(
-                (new Employee(162, "Jesse", 22, "male", 500)),
-                (new Employee(195, "Donna", 26, "female", 500)),
-                (new Employee(196, "Cathy", 23, "female", 500)),
-                (new Employee(197, "Jerry", 25, "male", 500)),
-                (new Employee(198, "Kael", 21, "male", 500)),
-                (new Employee(199, "Greg", 33, "male", 500)),
-                (new Employee(226, "Ramon", 21, "male", 500))
-        );
+        employee = new Employee(1, "Jesse", 22, "male", 500);
+        employeeService.addNewEmployee(employee);
+        employee = new Employee(2, "Donna", 26, "female", 500);
+        employeeService.addNewEmployee(employee);
+        employee = new Employee(3, "Cathy", 23, "female", 500);
+        employeeService.addNewEmployee(employee);
+        employee = new Employee(4, "Jerry", 25, "male", 500);
+        employeeService.addNewEmployee(employee);
+        employee = new Employee(5, "Kael", 21, "male", 500);
+        employeeService.addNewEmployee(employee);
+
     }
 
     @Test
@@ -48,22 +46,19 @@ public class EmployeeIntegrationTest {
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").isNumber())
                 .andExpect(jsonPath("$[0].name").value("Jesse"))
-                .andExpect(jsonPath("$[0].age").value("22"))
-                .andExpect(jsonPath("$[0].gender").value("male"))
-                .andExpect(jsonPath("$[0].salary").value("500"));
+                .andExpect(jsonPath("$[1].name").value("Donna"))
+                .andExpect(jsonPath("$[2].name").value("Cathy"))
+                .andExpect(jsonPath("$[3].name").value("Jerry"))
+                .andExpect(jsonPath("$[4].name").value("Kael"));
     }
 
     @Test
     void should_return_employee_when_getEmployeeByID() throws Exception {
         //given
-        int id = mockEmployees.get(0).getId();
-
-
         //when
         //then
-        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Jesse"))
                 .andExpect(jsonPath("$.age").value(22))
@@ -83,7 +78,11 @@ public class EmployeeIntegrationTest {
                 .param("page", String.valueOf(page)).param("pageSize", String.valueOf(pageSize))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(4)));
+                .andExpect(jsonPath("$.*", hasSize(4)))
+                .andExpect(jsonPath("$[0].name").value("Jesse"))
+                .andExpect(jsonPath("$[1].name").value("Donna"))
+                .andExpect(jsonPath("$[2].name").value("Cathy"))
+                .andExpect(jsonPath("$[3].name").value("Jerry"));
 
     }
 
@@ -97,7 +96,10 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/employees").param("gender", gender)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(4)));
+                .andExpect(jsonPath("$.*", hasSize(3)))
+                .andExpect(jsonPath("$[0].name").value("Jesse"))
+                .andExpect(jsonPath("$[1].name").value("Jerry"))
+                .andExpect(jsonPath("$[2].name").value("Kael"));
     }
 
     @Test
@@ -125,28 +127,25 @@ public class EmployeeIntegrationTest {
     @Test
     void should_update_employee_info_when_updateEmployeeById() throws Exception {
         //given
-        final Employee employee = new Employee(228, "Jennie", 22, "female", 2000);
-        final Employee addedEmployee = employeeRepository.save(employee);
         String newEmployeeInfo = "{\n" +
-                "        \"salary\": 2500\n" +
+                "        \"name\": \"Updated Jesse\",\n" +
+                "        \"salary\": 3000\n" +
                 "}";
-        int employeeID = addedEmployee.getId();
-
         //when
         //then
-        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{employeeID}", employeeID)
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{employeeID}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(newEmployeeInfo))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.salary").value("2500"));
+                .andExpect(jsonPath("$.name").value("Updated Jesse"))
+                .andExpect(jsonPath("$.salary").value("3000"));
     }
 
     @Test
     void should_remove_employee_when_removeEmployee() throws Exception {
         //given
-        final Employee employee = new Employee(228, "Lisa", 22, "female", 2000);
-        final Employee addedEmployee = employeeRepository.save(employee);
-
+        final Employee employee = new Employee(228, "TestEmployee", 99, "male", 9999);
+        final Employee addedEmployee = employeeService.addNewEmployee(employee);
         //when
         //then
         int employeeID = addedEmployee.getId();
