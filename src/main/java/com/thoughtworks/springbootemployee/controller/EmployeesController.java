@@ -23,8 +23,8 @@ public class EmployeesController {
     private EmployeeMapper employeeMapper;
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public List<EmployeeResponse> getAllEmployees() {
+        return employeeMapper.toResponseList(employeeService.getAllEmployees());
     }
 
     @GetMapping(path = "/{employeeID}")
