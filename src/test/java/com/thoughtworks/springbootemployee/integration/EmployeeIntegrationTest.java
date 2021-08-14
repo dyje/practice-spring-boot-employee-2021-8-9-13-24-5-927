@@ -154,4 +154,12 @@ public class EmployeeIntegrationTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void should_return_exception_when_getEmployeeByID_given_employee_id_is_not_found() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", 10))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Employee ID not found."));
+
+    }
 }
