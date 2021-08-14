@@ -57,8 +57,8 @@ public class EmployeesController {
     }
 
     @DeleteMapping(path = "/{employeeId}")
-    public Employee removeEmployee(@PathVariable Integer employeeId) {
-        return employeeService.removeEmployee(employeeId);
+    public EmployeeResponse removeEmployee(@PathVariable Integer employeeId) {
+        return employeeMapper.toResponse(employeeService.removeEmployee(employeeId));
     }
 
 }
